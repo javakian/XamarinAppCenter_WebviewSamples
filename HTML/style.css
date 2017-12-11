@@ -1,0 +1,113 @@
+	body{
+			margin: 0;
+			padding: 0;
+			border: 0;
+			font-size: 100%;
+			font: inherit;
+			vertical-align: baseline;
+
+			font-size: 12px;
+			font-family: arial;
+			padding: 4px
+		}
+
+		.noUnderline{
+			text-decoration: none;
+		}
+
+		.code{
+			background-color: #eef3f6;
+		}
+
+		.link{
+			color: blue;
+		}
+		
+		.colorBox{
+			background-color: #5b9aa0;
+			height: 32px;
+			width: 32px;
+		}
+
+		.idList{
+			padding: 0;
+		}
+
+		.idList > table > tbody tr td{
+			padding: 4px;
+		}
+
+		.idList > table > tbody tr:nth-child(even) {
+			background: #CDE7F0
+		}
+		
+		.smallFont{
+			font-size: 10px;
+			font-family: monospace;
+		}
+
+		.greenBG{
+			background-color: green;
+			color: white;
+		}
+
+		.supersmallFont{
+			font-size: 8px;
+			font-family: monospace;
+		}
+
+		.scrollingDiv{
+			overflow-y: scroll;
+			height:200px;
+			padding: 10px;
+		}
+
+		.scrollingDivBGToggle{
+			background-image: url("check.png");
+    		background-repeat: repeat;	
+		}
+
+		.scrollingDivBGToggle > #btnScrollingDiv{
+			background-image: none;
+    		background-color: green;
+    		color: white;	
+		}
+		
+		#btnScrollingDiv{
+			float: right;
+
+		}		  
+		
+		.textAlignRight{
+			text-align: right;
+		}
+
+		.section{
+			background-color:#c5dbec;
+			margin-bottom:20px;
+		}
+
+		.menu li{
+ 			padding-bottom:8px;
+ 			font-weight: bold;
+		}
+
+		#red, #green, #blue {
+			width: 300px;
+			margin: 15px;
+		}
+
+		#swatch {
+			width: 300px;
+			height: 60px;
+			margin-top: 10px;
+			margin-left: 15px;
+			background-image: none;
+		}
+
+		#red .ui-slider-range { background: #ef2929; }
+		#red .ui-slider-handle { border-color: #ef2929; }
+		#green .ui-slider-range { background: #8ae234; }
+		#green .ui-slider-handle { border-color: #8ae234; }
+		#blue .ui-slider-range { background: #729fcf; }
+		#blue .ui-slider-handle { border-color: #729fcf; }

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+	<title>AppCenter - Xamarin Webview Samples</title>
+	<link rel="stylesheet" href="jQueryUI/jquery-ui-1.12.0.custom/jquery-ui.min.css">
+	<link rel="stylesheet" href="style.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script src="jQueryUI/jquery-ui-1.12.0.custom/jquery-ui.min.js"></script>
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-81122166-1', 'auto');
+	  ga('send', 'pageview');
+
+	</script>
+	<script>
+
+	var jQueryLoaded = false;
+	function checkForJQuery() {
+
+	    //if the jQuery object isn't available
+	    if (typeof(jQuery) == 'undefined') {
+	        
+            document.write("<h1>Could not load jQuery on this device (</h1>");
+            jQueryLoaded = false;
+
+	    } else {
+	    	jQueryLoaded = true;
+	    }
+
+	}
+	
+	window.onload = function () { 
+	
+		checkForJQuery();
+
+		if (!jQueryLoaded)
+			return;
+
+
+		$.ajax({
+			url: "https://api.github.com/users/xamarin/repos",
+			statusCode: {
+				403: function() {
+					$("#githubRepos").append('<option value="None">Rate Limit Reached ... Sorry :(</option>');
+					$("#githubRepos").parent().prepend("<div class='ui-state-error'><br>Github Rate Limiting :(<br>" + data.message + "<br><br></div>");
+						
+				},
+				404: function() {
+					alert( "page not found" );
+				}
+			}
+		})
+		.fail(function() {
+			//alert( "error" );
+		})
+		.always(function() {
+			//alert( "complete" );
+		})
+		.done(function( data ) {
+			//$("body").html = data.total_count;
+			if ( console && console.log ) {
+				console.log( "Sample of data:", data);
+			}
+			var sel = $("#githubRepos");
+			$("#githubReposStargazers").empty();
+			$("#githubReposStargazersRepo").empty();
+			sel.empty();
+			var stargazers;
+			for (var i=0; i<data.length; i++) {
+				if (data[i].stargazers_count <= 30) {
+				stargazers = data[i].stargazers_count;
+			} else {
+				stargazers = "30+";
+			};
+				sel.append('<option value="' + data[i].name + '">' + data[i].name + ' (Stargazers: ' + stargazers + ')</option>');
+			}
+			$("#githubRepos").change();
+
+		});
+
+		$("#githubRepos").on('change', function() {
+			var value = $("#githubRepos option:selected").text();
+			if (value != "" && value != "None") {
+			//if ($("#githubRepos option:selected").text() != "") {
+				var url = "https://api.github.com/repos/xamarin/" + $("#githubRepos option:selected").val() + "/stargazers";
+				var sel = $("#githubReposStargazers");
+				console.log(url);
+				$.ajax({
+					url: url,
+					statusCode: {
+						404: function() {
+							alert( "page not found" );
+						}
+					}
+				})
+				.fail(function() {
+					//alert( "error" );
+				})
+				.always(function() {
+					//alert( "complete" );
+				})
+				.done(function( data ) {
+					//$("body").html = data.total_count;
+					if ( console && console.log ) {
+						console.log( "Sample of data:", data);
+					}
+					sel.empty();
+					$("#githubReposStargazersRepo").empty();
+					if (data.length == 0) {
+						sel.append('<option value="None">None</option>');
+						$("#githubReposStargazersRepo").append('<option value="None">None</option>');
+					} else {
+						for (var i=0; i<data.length; i++) {
+							sel.append('<option value="' + data[i].login + '">' + data[i].login + '</option>');
+						}
+						//$("#githubReposStargazers").change();
+					}
+
+				});
+			};
+
+		});
+
+
+		$("#githubReposStargazers").on('change', function() {
+			var value = $("#githubReposStargazers option:selected").text();
+			if (value != "" && value != "None") {
+				var url = "https://api.github.com/users/" + $("#githubReposStargazers option:selected").val() + "/repos";
+				var sel = $("#githubReposStargazersRepo");
+				console.log(url);
+				$.ajax({
+					url: url,
+					statusCode: {
+						404: function() {
+							alert( "page not found" );
+						}
+					}
+				})
+				.fail(function() {
+					//alert( "error" );
+				})
+				.always(function() {
+					//alert( "complete" );
+				})
+				.done(function( data ) {
+					//$("body").html = data.total_count;
+					if ( console && console.log ) {
+						console.log( "Sample of data:", data);
+					}
+					sel.empty();
+					if (data.length == 0) {
+						sel.append('<option value="None">None</option>');
+					} else {
+						for (var i=0; i<data.length; i++) {
+							sel.append('<option value="' + data[i].name + '">' + data[i].name + '</option>');
+						}
+					};
+				
+				});
+			};
+
+		});
+	}
+	</script>
+	<body>
+
+		<!-- Ajax Request ============================================================================================================================================= -->
+		<div class='section ui-widget ui-corner-all'>
+			<p class="ui-state-default ui-corner-all ui-helper-clearfix" style="padding:4px;">
+				<span class="ui-icon ui-icon-contact" style="float:left; margin:-2px 5px 0 0;"></span>
+				Ajax Request &amp; Results
+			</p>
+			<div class='ui-widget-content ui-widget ui-corner-all '>
+				<p><i>(some of)</i> <b>Xamarin Github Repos:</b> <a href="https://github.com/xamarin" target="_blank">https://github.com/xamarin</a></p>
+				<select name="githubRepos" id="githubRepos"></select>
+				<br>
+				<!-- <div id="githubReposSelected"></div>
+				<br> -->
+				<br><b>Selected Repo's Stargazers: </b>
+				<select name="githubReposStargazers" id="githubReposStargazers"></select>
+				<br>
+				<br><b>Selected Stargazer Repos: </b>
+				<select name="githubReposStargazersRepo" id="githubReposStargazersRepo"></select>
+				<br><br>
+				
+			</div>
+		</div>
+		<br/>
+		<br/>
+
+
+	</body>
+</html>
