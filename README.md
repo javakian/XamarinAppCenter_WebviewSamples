@@ -27,4 +27,7 @@ Here are a series of samples that illustrate how to use Xamarin.UITest APIs to i
 - [jQueryUI Framework](https://jqueryui.com/) *(used in each HTML sample)*
 - [Github Developer API](https://developer.github.com/v3/) *(used in Ajax/Async test)*
 
+# Build status
+[![Build status](https://build.appcenter.ms/v0.1/apps/3e2d5abf-78b1-4bdc-8935-ef97aeea71f6/branches/master/badge)](https://appcenter.ms)
+
 ![alt text](HTML/phones.jpg "XTC Phone Results")
